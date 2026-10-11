@@ -21,7 +21,6 @@ import re
 import socket
 import ssl
 import sys
-from urllib.parse import urlsplit
 
 DEFAULT_PORTS = "21,22,23,25,53,80,110,143,443,445,993,995,3306,3389,5432,6379,8080,8443,27017"
 DEFAULT_TIMEOUT = 3.0
@@ -29,26 +28,26 @@ DEFAULT_THREADS = 50
 
 # (name, regex, ports to check on that port)
 SIGNATURES = [
-    ("OpenSSH",          r"^SSH-2\.0-OpenSSH",                       [22]),
-    ("Dropbear SSH",     r"^SSH-2\.0-dropbear",                      [22]),
-    ("ProFTPD",          r"^220.*ProFTPD",                           [21]),
-    ("vsftpd",           r"^220.*vsftpd",                            [21]),
-    ("Microsoft IIS",    r"^IIS/\d",                                 [80, 8080]),
-    ("Apache",           r"^Apache/[\d.]+",                          [80, 8080]),
-    ("nginx",            r"^nginx/[\d.]+",                           [80, 8080]),
-    ("lighttpd",         r"^lighttpd/[\d.]+",                        [80, 8080]),
-    ("Microsoft SMTP",   r"^220 .*Microsoft SMTP",                   [25]),
-    ("Postfix",          r"^220 .*Postfix",                          [25]),
-    ("Exim",             r"^220 .*Exim",                             [25]),
-    ("MySQL",            r"^\x00\x00\x00\x0a.*",                     [3306]),
-    ("PostgreSQL",       r"^E\x00\x00.{8}",                          [5432]),
-    ("RDP",              r"^\x03\x00\x00",                           [3389]),
-    ("MongoDB",          r"^\x3a\x00\x00\x00",                       [27017]),
-    ("Redis",            r"^-ERR (unknown command|invalid password)", [6379]),
-    ("Elasticsearch",    r"^\x00\x0c",                               [9200]),
-    ("Jetty",            r"^Jetty\(",                                 [8080, 8443]),
-    ("Tomcat",           r"HTTP/[\d.]+ Server: Apache-Coyote",       [8080]),
-    ("Python http.server", r"^SimpleHTTP/",                          [8000, 8080]),
+    ("OpenSSH", r"^SSH-2\.0-OpenSSH", [22]),
+    ("Dropbear SSH", r"^SSH-2\.0-dropbear", [22]),
+    ("ProFTPD", r"^220.*ProFTPD", [21]),
+    ("vsftpd", r"^220.*vsftpd", [21]),
+    ("Microsoft IIS", r"^IIS/\d", [80, 8080]),
+    ("Apache", r"^Apache/[\d.]+", [80, 8080]),
+    ("nginx", r"^nginx/[\d.]+", [80, 8080]),
+    ("lighttpd", r"^lighttpd/[\d.]+", [80, 8080]),
+    ("Microsoft SMTP", r"^220 .*Microsoft SMTP", [25]),
+    ("Postfix", r"^220 .*Postfix", [25]),
+    ("Exim", r"^220 .*Exim", [25]),
+    ("MySQL", r"^\x00\x00\x00\x0a.*", [3306]),
+    ("PostgreSQL", r"^E\x00\x00.{8}", [5432]),
+    ("RDP", r"^\x03\x00\x00", [3389]),
+    ("MongoDB", r"^\x3a\x00\x00\x00", [27017]),
+    ("Redis", r"^-ERR (unknown command|invalid password)", [6379]),
+    ("Elasticsearch", r"^\x00\x0c", [9200]),
+    ("Jetty", r"^Jetty\(", [8080, 8443]),
+    ("Tomcat", r"HTTP/[\d.]+ Server: Apache-Coyote", [8080]),
+    ("Python http.server", r"^SimpleHTTP/", [8000, 8080]),
 ]
 
 TLS_PORTS = {443, 8443, 9443}
@@ -153,7 +152,7 @@ def main():
         hosts.append(args.host.strip())
     if args.hosts:
         with open(args.hosts, "r", encoding="utf-8") as fh:
-            hosts += [l.strip() for l in fh if l.strip()]
+            hosts += [line.strip() for line in fh if line.strip()]
     if not hosts:
         ap.error("provide --host or --hosts")
 
@@ -177,7 +176,7 @@ def main():
             fh.write("host,port,scheme,service,banner\n")
             for r in sorted(results, key=lambda x: (x["host"], x["port"])):
                 banner = r["banner"].replace(",", ";")
-                fh.write(f"{r['host']},{r['port']},{r['scheme']},\"{r['service']}\",\"{banner}\"\n")
+                fh.write(f'{r["host"]},{r["port"]},{r["scheme"]},"{r["service"]}","{banner}"\n')
         print(f"[*] Results written to {args.output}")
 
     return 0
