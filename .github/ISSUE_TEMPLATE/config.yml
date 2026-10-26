@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability (private)
+    url: https://github.com/bhuvanchandt/recon-toolkit/security/advisories/new
+    about: Please report security issues privately. Do not open a public issue.
