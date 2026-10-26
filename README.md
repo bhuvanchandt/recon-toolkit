@@ -5,10 +5,12 @@
 **Lightweight, dependency-free reconnaissance tooling built with only the Python standard library.**
 
 [![CI](https://github.com/bhuvanchandt/recon-toolkit/actions/workflows/ci.yml/badge.svg)](https://github.com/bhuvanchandt/recon-toolkit/actions/workflows/ci.yml)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/bhuvanchandt/recon-toolkit?color=6D28D9&label=release&style=flat-square)](https://github.com/bhuvanchandt/recon-toolkit/releases)
 [![License: MIT](https://img.shields.io/badge/License-MIT-6D28D9.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.8%2B-4F46E5?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
-[![Dependencies](https://img.shields.io/badge/dependencies-0-16a34a?style=flat-square)](#)
+[![Dependencies](https://img.shields.io/badge/dependencies-0-16a34a?style=flat-square)](#requirements)
 [![Author](https://img.shields.io/badge/author-%40bhuvanchandt-7C3AED?style=flat-square&logo=github)](https://github.com/bhuvanchandt)
+[![Changelog](https://img.shields.io/badge/changes-CHANGELOG.md-7C3AED?style=flat-square)](CHANGELOG.md)
 
 </div>
 
@@ -138,7 +140,7 @@ python fingerprint.py --hosts open.txt --output services.csv
 ### `scanner.py`
 
 | Flag | Description |
-|---|---|
+|---|---||
 | `--host` | Target host or IP |
 | `--ports` | Port list/range (`22,80,443` or `1-1024`) |
 | `--threads` | Concurrent workers |
@@ -172,6 +174,13 @@ python fingerprint.py --hosts open.txt --output services.csv
 - Python 3.8 or newer
 - No third-party dependencies
 - `subdomain_enum.py` needs outbound HTTPS (crt.sh) and DNS
+
+---
+
+## Versioning
+
+Releases are tagged `vMAJOR.MINOR.PATCH` following [Semantic Versioning](https://semver.org/).
+See the [changelog](CHANGELOG.md) for what changed in each release.
 
 ---
 
